@@ -6,12 +6,13 @@ def process_capture(pcap_file):
 
         # iterate over each pacet in the capture
         for ts, buf in pcap:
+            print('-------------------------')
             # gives you the link layer content
             eth = dpkt.ethernet.Ethernet(buf)
 
             # make sure the packet is an IP packet
             if not isinstance(eth.data, dpkt.ip.IP):
-                print('Non IP Packet type not supported %s' % eth.data.__class__.__name__)
+                # print('Non IP Packet type not supported %s' % eth.data.__class__.__name__)
                 continue
 
             # gives you the network layer content
@@ -23,7 +24,7 @@ def process_capture(pcap_file):
 
             # make sure the packet is a TCP packet
             if not isinstance(tcp, dpkt.tcp.TCP):
-                print('Non TCP Packet type not supported %s' % tcp.__class__.__name__)
+                # print('Non TCP Packet type not supported %s' % tcp.__class__.__name__)
                 continue
             else:
                 # print out the source and destination IP addresses
@@ -35,16 +36,23 @@ def process_capture(pcap_file):
                     print('HTTP Request')
 
                     if len(tcp.data) > 0:
-                        http = dpkt.http.Request(tcp.data)
-                        print(http)
+                        try:
+                            http = dpkt.http.Request(tcp.data)
+                            print(http)
+                        except (dpkt.dpkt.NeedData, dpkt.dpkt.UnpackError):
+                            continue
                 elif tcp.sport == 80 and len(tcp.data) >= 0:
                     print('HTTP Response')
                     if len(tcp.data) > 0:
-                        http = dpkt.http.Response(tcp.data)
-                        print(http)
+                        try:
+                            http = dpkt.http.Response(tcp.data)
+                            print(http)
+                        except (dpkt.dpkt.NeedData, dpkt.dpkt.UnpackError):
+                            continue
                 else:
                     # non HTTP packet
                     continue
+              
 
 if __name__ == '__main__':
   # check if argument is provided
