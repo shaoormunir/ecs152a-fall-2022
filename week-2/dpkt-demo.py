@@ -6,7 +6,7 @@ def process_capture(pcap_file):
 
         # iterate over each pacet in the capture
         for ts, buf in pcap:
-            print('-------------------------')
+            # print('-------------------------')
             # gives you the link layer content
             eth = dpkt.ethernet.Ethernet(buf)
 
@@ -27,14 +27,14 @@ def process_capture(pcap_file):
                 # print('Non TCP Packet type not supported %s' % tcp.__class__.__name__)
                 continue
             else:
-                # print out the source and destination IP addresses
-                print('Source Port: %s' % tcp.sport)
-                print('Destination Port: %s' % tcp.dport)
+              
 
                 # check if the packet is an HTTP packet
                 if tcp.dport == 80 and len(tcp.data) > 0:
                     print('HTTP Request')
-
+                      # print out the source and destination IP addresses
+                    print('Source Port: %s' % tcp.sport)
+                    print('Destination Port: %s' % tcp.dport)
                     if len(tcp.data) > 0:
                         try:
                             http = dpkt.http.Request(tcp.data)
@@ -43,6 +43,9 @@ def process_capture(pcap_file):
                             continue
                 elif tcp.sport == 80 and len(tcp.data) >= 0:
                     print('HTTP Response')
+                      # print out the source and destination IP addresses
+                    print('Source Port: %s' % tcp.sport)
+                    print('Destination Port: %s' % tcp.dport)
                     if len(tcp.data) > 0:
                         try:
                             http = dpkt.http.Response(tcp.data)
