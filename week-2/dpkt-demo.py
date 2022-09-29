@@ -6,7 +6,7 @@ def process_capture(pcap_file):
 
         # iterate over each pacet in the capture
         for ts, buf in pcap:
-            # print('-------------------------')
+            print('-------------------------')
             # gives you the link layer content
             eth = dpkt.ethernet.Ethernet(buf)
 
@@ -40,7 +40,7 @@ def process_capture(pcap_file):
                             http = dpkt.http.Request(tcp.data)
                             print(http)
                         except (dpkt.dpkt.NeedData, dpkt.dpkt.UnpackError):
-                            continue
+                          continue
                 elif tcp.sport == 80 and len(tcp.data) >= 0:
                     print('HTTP Response')
                       # print out the source and destination IP addresses
@@ -49,7 +49,7 @@ def process_capture(pcap_file):
                     if len(tcp.data) > 0:
                         try:
                             http = dpkt.http.Response(tcp.data)
-                            print(http)
+                            print(http.body.decode())
                         except (dpkt.dpkt.NeedData, dpkt.dpkt.UnpackError):
                             continue
                 else:
@@ -58,7 +58,7 @@ def process_capture(pcap_file):
               
 
 if __name__ == '__main__':
-  # check if argument is provided
+  check if argument is provided
   if len(sys.argv) != 2:
     print("Usage: python3 dpkt-demo.py capture.pcap")
     sys.exit(1)
