@@ -9,4 +9,6 @@ python3 dpkt-demo.py <filename.pcap>
 
 The *discussion-demo.py* file contains code explained in the discussion session.
 
-Feel free to make changes and experiment with all that dpkt has to offer. Happy Coding!
+Feel free to make changes and experiment with all that dpkt has to offer. 
+
+## Happy Coding!

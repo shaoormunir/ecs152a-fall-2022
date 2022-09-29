@@ -1,4 +1,4 @@
-# ecs152a-fall-2022
+# ECS152A (Fall 2022)
 
 ## Downloading Wireshark
 Wireshark works on all major operating system. To download and install it, visit: http://www.wireshark.org/download.html
