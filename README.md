@@ -17,3 +17,5 @@ To install dpkt, run the following command:
 ```
 python3 -m pip install dpkt
 ```
+
+Read and learn more about dpkt here: https://dpkt.readthedocs.io/en/latest/index.html
