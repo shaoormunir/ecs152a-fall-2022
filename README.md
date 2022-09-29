@@ -8,12 +8,12 @@ Wireshark works on all major operating system. To download and install it, visit
 
 To install dpkt, make sure that you have a working installation of Python. To check if you have Python installed, run:
 
-'''
+```
 python3 --version
-'''
+```
 
 To install dpkt, run the following command:
 
-'''
+```
 python3 -m pip install dpkt
-'''
+```
