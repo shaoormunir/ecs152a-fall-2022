@@ -46,22 +46,21 @@ def service_connection(key, mask):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="python3 multiconn-server.py -p port -i host -n num_conns")
+    parser = argparse.ArgumentParser(description="python3 multiconn-server.py -p port -i host")
     parser.add_argument("-p", help="port_number", default=20000)
     parser.add_argument("-i", help="host_name", default="localhost")
-    parser.add_argument("-n", help="number_of_connections", default=1)
 
     args = parser.parse_args()
 
     HOST = args.i
     PORT = int(args.p)
-    NUM_CONNS = int(args.n)
+    
 
     # create a TCP socket
     lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # set the socket to non-blocking, so we can use the selector
     lsock.bind((HOST, PORT))
-    lsock.listen(NUM_CONNS)
+    lsock.listen()
     print(f"Listening on {HOST}:{PORT}")
     lsock.setblocking(False)
     sel.register(lsock, selectors.EVENT_READ, data=None)
