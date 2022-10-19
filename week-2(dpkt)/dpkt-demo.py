@@ -58,7 +58,7 @@ def process_capture(pcap_file):
               
 
 if __name__ == '__main__':
-  check if argument is provided
+  # check if argument is provided
   if len(sys.argv) != 2:
     print("Usage: python3 dpkt-demo.py capture.pcap")
     sys.exit(1)
