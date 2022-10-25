@@ -1,6 +1,7 @@
 import socket
 from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor
+from time import sleep
 
 def parse_args():
     # parse the command line arguments
@@ -9,7 +10,7 @@ def parse_args():
     args.add_argument('--port', default=8000, type=int)
     return args.parse_args()
 
-def client_handler(socket, addr):
+def client_handler(socket, addr, client_id):
     # communicate with client until it disconnects
     message_id = 1
     while True:
@@ -24,6 +25,11 @@ def client_handler(socket, addr):
         if message:
             # decode the message and print
             print(f"Message from {addr}: {message.decode()}")
+
+            # delay for client_id 1
+            if client_id == 1:
+                # sleep(5)
+                pass
 
             # send response
             message = socket.sendall(f"Pong #{message_id}".encode())
@@ -45,6 +51,9 @@ def start_multithreaded_tcp_server(host, port):
         # start listening for connections
         server_socket.listen()
 
+        # client ids
+        client_id = 0
+
         # create a processing pool for threads with max number of threads as 5
         with ThreadPoolExecutor(max_workers=5) as executor:
 
@@ -60,7 +69,10 @@ def start_multithreaded_tcp_server(host, port):
                 # i.e.,
                 # the thread will start in the client_handler function and the values
                 # of client_socket and client_addr will be passed to that thread
-                executor.submit(client_handler, client_socket, client_addr)
+                executor.submit(client_handler, client_socket, client_addr, client_id)
+                
+                # increment client id
+                client_id += 1
 
             
 

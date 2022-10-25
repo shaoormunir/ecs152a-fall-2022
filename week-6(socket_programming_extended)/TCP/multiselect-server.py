@@ -1,11 +1,13 @@
 import socket
 from argparse import ArgumentParser
 import select
+from time import sleep
 
 # struct for storing client state
 class Client:
-    def __init__(self, addr):
+    def __init__(self, addr, client_id):
         self.addr = addr
+        self.client_id = client_id
         self.hasPinged = False
         self.pongCount = 1
 
@@ -40,6 +42,7 @@ def start_multi_tcp_server(host, port):
 
         # create a list of client connections to keep track of their data
         clients = {}
+        client_id = 0
 
         # while we still have inputs to read from
         while inputs:
@@ -72,7 +75,10 @@ def start_multi_tcp_server(host, port):
                     outputs.append(client_socket)
 
                     # create a dictionary so we can access this client later
-                    clients[client_socket] = Client(client_addr)
+                    clients[client_socket] = Client(client_addr, client_id)
+
+                    # increment client id
+                    client_id += 1
 
                     print(f"New client {client_addr} connected!")
 
@@ -107,6 +113,10 @@ def start_multi_tcp_server(host, port):
 
                 # check if client has pinged and is expecting a pong
                 if client.hasPinged:
+                    # add a delay before sending response
+                    if client.client_id == 1:
+                        # sleep(5)
+                        pass
                     # send pong
                     sock.sendall(f"Pong #{client.pongCount}".encode())
                     # increment count of pong
@@ -119,6 +129,7 @@ def start_multi_tcp_server(host, port):
             for sock in exceptionals:
                 inputs.remove(sock)
                 outputs.remove(sock)
+                del clients[sock]
                 sock.close()
 
 
