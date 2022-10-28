@@ -28,7 +28,7 @@ def client_handler(socket, addr, client_id):
 
             # delay for client_id 1
             if client_id == 1:
-                # sleep(5)
+                sleep(5)
                 pass
 
             # send response

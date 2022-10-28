@@ -115,7 +115,7 @@ def start_multi_tcp_server(host, port):
                 if client.hasPinged:
                     # add a delay before sending response
                     if client.client_id == 1:
-                        # sleep(5)
+                        sleep(5)
                         pass
                     # send pong
                     sock.sendall(f"Pong #{client.pongCount}".encode())
