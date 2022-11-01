@@ -3,7 +3,7 @@ import socket
 
 def create_acknowledgement(message_id):
     # return the acknowledgement
-    return f"#{message_id} Acknowledged"
+    return f"{message_id}$ Acknowledged"
 
 # create a udp socket
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:

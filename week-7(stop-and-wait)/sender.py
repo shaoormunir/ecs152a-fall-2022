@@ -1,4 +1,3 @@
-from email import message
 import socket
 
 def create_message(message_id, message):
@@ -12,7 +11,7 @@ with open("alice29.txt", "r") as file:
     message = file.read()
 
 
-PKT_SIZE = 1024
+PKT_SIZE = 1000
 packets = []
 
 # split the message into packets
@@ -54,4 +53,3 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
                   # if timeout occurs, resend the message
                   print(f"Timeout occured for #{i}, resending")
                   udp_socket.sendto(message.encode(), ("localhost", 5001))
-
