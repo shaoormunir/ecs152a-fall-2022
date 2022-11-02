@@ -26,6 +26,8 @@ def service_connection(key, mask):
     sock = key.fileobj
     data = key.data
     if mask & selectors.EVENT_READ:
+        # print the event
+        print(f"Read event for {data.addr}")
         # If we can read, it means the socket is ready to receive data
         recv_data = sock.recv(1024)
         if recv_data:

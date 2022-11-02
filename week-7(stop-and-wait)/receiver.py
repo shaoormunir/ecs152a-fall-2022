@@ -23,7 +23,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
 
         # randomly drop the packet
         random_chance = random.randint(0, 100)
-        if random_chance < 10:
+        if random_chance < 50:
             print(f"Packet #{message_id} dropped")
             continue
 
