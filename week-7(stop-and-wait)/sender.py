@@ -45,7 +45,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
                   acknowledgement = acknowledgement.decode()
 
                   # check if the acknowledgement is correct
-                  if acknowledgement == f"#{i} Acknowledged":
+                  if acknowledgement == f"{i}$ Acknowledged":
                       # print the acknowledgement
                       print(acknowledgement)
                       break
