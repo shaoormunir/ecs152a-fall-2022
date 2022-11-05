@@ -12,7 +12,7 @@ with open("alice29.txt", "r") as file:
 
 
 PKT_SIZE = 1000
-WINDOW_SIZE = 3  # window size is 3 packets, so we can send 3 packets at a time and wait for 3 acknowledgements before sending the next 3 packets
+WINDOW_SIZE = 6  # window size is 3 packets, so we can send 3 packets at a time and wait for 3 acknowledgements before sending the next 3 packets
 packets = []
 
 # split the message into packets
