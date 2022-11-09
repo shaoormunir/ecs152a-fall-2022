@@ -3,7 +3,7 @@ import socket
 
 def create_message(message_id, message):
     # return the message
-    return f"#{message_id}: {message}"
+    return f"#{message_id}@ {message}"
 
 
 # read alice29.txt file
@@ -41,7 +41,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
             udp_socket.sendto(message.encode(), ("localhost", 5001))
 
         # list to store the acknowledgements
-        acknowledgements = [False for _ in range(WINDOW_SIZE)]
+        acknowledgements = [False for message in messages]
 
         # wait for acknowledgements
         while True:
@@ -67,5 +67,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
             except socket.timeout:
                 # if timeout occurs, resend the messages
                 print(f"Timeout occured for #{i}, resending")
-                for message in messages:
-                    udp_socket.sendto(message.encode(), ("localhost", 5001))
+
+                for acknoledgement, message in zip(acknowledgements, messages):
+                    if not acknoledgement:
+                        udp_socket.sendto(message.encode(), ("localhost", 5001))
+    
+    # send the last message with message id -1
+    udp_socket.sendto(create_message(-1, "").encode(), ("localhost", 5001))
