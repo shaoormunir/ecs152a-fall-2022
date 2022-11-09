@@ -59,8 +59,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
     message = ""
     sorted_data = sorted(data_buffer.items())
 
-    print(sorted_data)
-
     for data in sorted_data:
         message += data[1]
     
